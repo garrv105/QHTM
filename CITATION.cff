@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use QHTM, please cite it as below."
+title: "QHTM — Quantum Hardware Threat Matrix"
+abstract: >-
+  An open, defense-agnostic taxonomy of adversary techniques against quantum
+  computing hardware and its classical control stack (QEC/syndrome-decoder
+  pipeline, control/compilation stack, cross-tenant interactions, covert
+  channels). Not post-quantum cryptography.
+version: "1.0"
+date-released: 2026-11-07
+license: CC-BY-4.0
+authors:
+  - family-names: Sipani
+    given-names: Garrv
+keywords:
+  - quantum computing security
+  - quantum hardware security
+  - quantum error correction
+  - threat taxonomy
+  - control stack
