@@ -1,5 +1,7 @@
 # QHTM — Quantum Hardware Threat Matrix
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24047636.svg)](https://doi.org/10.5281/zenodo.24047636)
+
 **An open taxonomy of adversary techniques against quantum computing hardware and its classical control stack.**
 
 **Version 1.0** · 2026 · Originated by Garrv Sipani · Open community resource
