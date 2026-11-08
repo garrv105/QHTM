@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QHTM — Quantum Hardware Threat Matrix</title>
+<meta name="description" content="QHTM, the Quantum Hardware Threat Matrix: an open, defense-agnostic, ATT&CK-style catalog of adversary techniques against quantum computing hardware. 26 techniques across 5 tactics, each with an honest maturity tag. CC BY 4.0.">
+<meta property="og:title" content="QHTM — Quantum Hardware Threat Matrix">
+<meta property="og:description" content="An open, ATT&CK-style threat matrix for the security of quantum computing hardware. 26 techniques, 5 tactics, honest maturity tags. CC BY 4.0.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0d13; --bg2:#0e121b; --panel:#131824; --panel2:#171d2b;
+    --line:#232c3d; --line2:#2d3850;
+    --txt:#e7ecf5; --muted:#9aa7bd; --faint:#6b7689;
+    --accent:#a78bfa; --accent2:#22d3ee;
+    --hw:#f87171; --sim:#fbbf24; --theo:#60a5fa; --supp:#34d399;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(167,139,250,.10), transparent 60%),
+      radial-gradient(1000px 500px at -10% 0%, rgba(34,211,238,.08), transparent 55%),
+      var(--bg);
+    color:var(--txt); font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    line-height:1.5; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1240px; margin:0 auto; padding:0 16px}
+  a{color:var(--accent2); text-decoration:none}
+  a:hover{text-decoration:underline}
+  code,.mono{font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace}
+
+  /* Header */
+  header{padding:54px 0 26px}
+  .eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:12px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--accent); font-weight:700; margin-bottom:14px}
+  .eyebrow::before{content:""; width:22px; height:2px; background:linear-gradient(90deg,var(--accent),var(--accent2)); border-radius:2px}
+  h1{font-size:clamp(30px,6vw,52px); line-height:1.04; margin:0 0 14px; font-weight:800; letter-spacing:-.02em}
+  h1 .g{background:linear-gradient(92deg,var(--accent),var(--accent2)); -webkit-background-clip:text; background-clip:text; color:transparent}
+  .lede{font-size:clamp(15px,2.4vw,19px); color:var(--muted); max-width:70ch; margin:0 0 20px}
+  .lede strong{color:var(--txt); font-weight:600}
+  .meta{display:flex; flex-wrap:wrap; gap:8px; margin-top:22px}
+  .chip{display:inline-flex; align-items:center; gap:7px; padding:7px 13px; border:1px solid var(--line2);
+    border-radius:999px; font-size:13px; color:var(--muted); background:var(--panel)}
+  .chip b{color:var(--txt); font-weight:600}
+  .chip.cta{background:linear-gradient(92deg,rgba(167,139,250,.16),rgba(34,211,238,.14)); border-color:var(--accent); color:var(--txt); font-weight:600}
+
+  /* Legend + filter */
+  .controls{display:flex; flex-wrap:wrap; align-items:center; gap:18px; justify-content:space-between;
+    padding:18px; margin:14px 0 26px; background:var(--bg2); border:1px solid var(--line); border-radius:var(--radius)}
+  .legend{display:flex; flex-wrap:wrap; gap:16px; font-size:13px; color:var(--muted)}
+  .legend .lg{display:inline-flex; align-items:center; gap:7px}
+  .dot{width:10px; height:10px; border-radius:3px; display:inline-block}
+  .d-hw{background:var(--hw)} .d-sim{background:var(--sim)} .d-theo{background:var(--theo)} .d-supp{background:var(--supp)}
+  .filters{display:flex; flex-wrap:wrap; gap:8px}
+  .filters .fbtn{font:inherit; font-size:13px; font-weight:600; color:var(--muted); cursor:pointer;
+    background:var(--panel); border:1px solid var(--line2); border-radius:999px; padding:7px 14px; transition:.15s}
+  .filters .fbtn:hover{color:var(--txt); border-color:var(--accent)}
+  .filters .fbtn[aria-pressed="true"]{background:var(--accent); color:#0a0d13; border-color:var(--accent)}
+
+  /* Matrix */
+  .matrix{display:grid; grid-template-columns:repeat(5,1fr); gap:14px; align-items:start}
+  .col{background:var(--bg2); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; display:flex; flex-direction:column}
+  .col-h{padding:14px 14px 12px; border-bottom:1px solid var(--line); background:var(--panel)}
+  .col-h .tid{font-size:12px; font-weight:700; letter-spacing:.08em; color:var(--accent); font-family:"JetBrains Mono",monospace}
+  .col-h .tname{font-size:14.5px; font-weight:700; margin-top:3px; line-height:1.25}
+  .col-h .tcount{font-size:11.5px; color:var(--faint); margin-top:6px}
+  .col-b{padding:10px; display:flex; flex-direction:column; gap:9px}
+  .tech{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:11px 11px 12px; transition:.18s}
+  .tech:hover{border-color:var(--line2); background:var(--panel2); transform:translateY(-1px)}
+  .tech.dim{opacity:.22; filter:grayscale(.4)}
+  .tech .thead{display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:5px}
+  .tech .tcode{font-family:"JetBrains Mono",monospace; font-size:11.5px; font-weight:600; color:var(--muted)}
+  .tech .tn{font-size:13.5px; font-weight:600; line-height:1.3; margin:0 0 6px}
+  .tech .td{font-size:12.5px; color:var(--muted); line-height:1.45; margin:0}
+  .badges{display:flex; gap:4px; flex-shrink:0}
+  .badge{font-size:9.5px; font-weight:700; letter-spacing:.04em; padding:3px 6px; border-radius:5px; text-transform:uppercase; font-family:"JetBrains Mono",monospace}
+  .b-hw{background:rgba(248,113,113,.15); color:var(--hw); border:1px solid rgba(248,113,113,.35)}
+  .b-sim{background:rgba(251,191,36,.14); color:var(--sim); border:1px solid rgba(251,191,36,.32)}
+  .b-theo{background:rgba(96,165,250,.14); color:var(--theo); border:1px solid rgba(96,165,250,.32)}
+  .b-supp{background:rgba(52,211,153,.13); color:var(--supp); border:1px solid rgba(52,211,153,.30)}
+
+  /* Sections */
+  section.block{margin:40px 0}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+  .card{background:var(--bg2); border:1px solid var(--line); border-radius:var(--radius); padding:22px}
+  .card h3{margin:0 0 10px; font-size:16px; font-weight:700}
+  .card p{margin:0 0 10px; color:var(--muted); font-size:14px}
+  .card ul{margin:6px 0 0; padding-left:18px; color:var(--muted); font-size:14px}
+  .card li{margin:5px 0}
+  h2.sec{font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); font-weight:700; margin:0 0 16px}
+  .refs{list-style:none; margin:0; padding:0; display:grid; gap:10px}
+  .refs li{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:12px 14px; font-size:13.5px; color:var(--muted)}
+  .refs li b{color:var(--txt); font-weight:600}
+
+  footer{border-top:1px solid var(--line); margin-top:48px; padding:30px 0 60px; color:var(--faint); font-size:13px}
+  footer .fr{display:flex; flex-wrap:wrap; gap:18px; justify-content:space-between; align-items:center}
+  .disc{margin-top:16px; font-size:12.5px; color:var(--faint); max-width:80ch}
+
+  @media (max-width:1000px){ .matrix{grid-template-columns:repeat(2,1fr)} }
+  @media (max-width:640px){
+    .matrix{grid-template-columns:1fr}
+    .grid2{grid-template-columns:1fr}
+    .controls{flex-direction:column; align-items:flex-start}
+    header{padding:36px 0 18px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <span class="eyebrow">Open Framework · v1.0</span>
+    <h1>The <span class="g">Quantum Hardware<br>Threat Matrix</span></h1>
+    <p class="lede"><strong>QHTM</strong> is an open, defense-agnostic catalog of adversary techniques against quantum computing hardware and its classical control stack — modeled on MITRE ATT&CK. It covers the surface that fault tolerance will depend on: the QEC syndrome/decoder pipeline and the classical control stack. It is <strong>not</strong> post-quantum cryptography, which protects classical systems <em>from</em> quantum computers. QHTM maps attacks <em>on the quantum computer itself.</em></p>
+    <div class="meta">
+      <span class="chip cta"><a href="https://github.com/garrv105/qhtm" style="color:inherit">★ github.com/garrv105/qhtm</a></span>
+      <span class="chip"><b>26</b> techniques</span>
+      <span class="chip"><b>5</b> tactics</span>
+      <span class="chip">License <b>CC BY 4.0</b></span>
+      <span class="chip">Author <b>Garrv Sipani</b></span>
+      <span class="chip">DOI <b>pending (Zenodo)</b></span>
+      <span class="chip">Preprint <b>arXiv (pending)</b></span>
+    </div>
+  </header>
+
+  <div class="controls">
+    <div class="legend">
+      <span class="lg"><span class="dot d-hw"></span> <b style="color:var(--txt)">HW</b> — demonstrated on hardware</span>
+      <span class="lg"><span class="dot d-sim"></span> <b style="color:var(--txt)">Sim</b> — faithful simulation</span>
+      <span class="lg"><span class="dot d-theo"></span> <b style="color:var(--txt)">Theo</b> — theoretical</span>
+      <span class="lg"><span class="dot d-supp"></span> <b style="color:var(--txt)">Supp</b> — suppressed on current HW</span>
+    </div>
+    <div class="filters" id="filters">
+      <button class="fbtn" data-f="all" aria-pressed="true">All</button>
+      <button class="fbtn" data-f="HW" aria-pressed="false">HW</button>
+      <button class="fbtn" data-f="Sim" aria-pressed="false">Sim</button>
+      <button class="fbtn" data-f="Theo" aria-pressed="false">Theo</button>
+      <button class="fbtn" data-f="Supp" aria-pressed="false">Supp</button>
+    </div>
+  </div>
+
+  <div class="matrix" id="matrix"></div>
+
+  <section class="block">
+    <div class="grid2">
+      <div class="card">
+        <h3>What QHTM is</h3>
+        <p>A shared, versioned vocabulary for quantum-hardware attacks, so researchers, operators, and tool builders can reason about coverage against a named list instead of scattered papers.</p>
+        <ul>
+          <li>Defense-agnostic — it names what an adversary does, not how anyone detects it.</li>
+          <li>Honestly maturity-tagged — over-claiming is the failure mode it exists to prevent.</li>
+          <li>Stable, citable technique IDs (e.g. <code>T2.5</code>) that never change meaning.</li>
+          <li>Open under CC BY 4.0 — free to use, cite, and extend with attribution.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>What QHTM is not</h3>
+        <p>It is a map of attacks, not a product and not a defense. It is a starting point, and it is deliberately incomplete — the value of a shared map grows as the community corrects and extends it.</p>
+        <ul>
+          <li>Not post-quantum cryptography (that's the opposite problem).</li>
+          <li>Not a detection or mitigation method — those are tracked separately and out of scope.</li>
+          <li>Not vendor-specific — the techniques generalize across hardware modalities.</li>
+          <li>Contributions of techniques and maturity evidence are welcome via the repo.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2 class="sec">Selected references</h2>
+    <ul class="refs">
+      <li><b>A Preliminary Taxonomy of Attacks on Quantum Computers.</b> C. Blakely et al. arXiv:2404.12465, 2024.</li>
+      <li><b>Analysis of Crosstalk in NISQ Devices and Security Implications in Multi-Programming Regime.</b> A. Ash-Saki, M. Alam, S. Ghosh. ISLPED, 2020.</li>
+      <li><b>Crosstalk-induced Side Channel Threats in Multi-Tenant NISQ Computers.</b> NDSS, 2025. arXiv:2412.10507.</li>
+      <li><b>Fooling the Decoder: Adversarial Attacks on RL-based QEC Decoders.</b> M. Lenssen, A. Paler. arXiv:2504.19651, 2025.</li>
+      <li><b>Fault Attacks on ML-based Quantum Control and Error Correction.</b> A. Etim, J. Szefer. arXiv:2512.20077, 2025.</li>
+      <li><b>MITRE ATT&CK: Design and Philosophy.</b> B. Strom et al. The MITRE Corporation, 2020.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <div class="fr">
+      <div>Originated and maintained by <b style="color:var(--txt)">Garrv Sipani</b> · <a href="https://github.com/garrv105/qhtm">github.com/garrv105/qhtm</a></div>
+      <div>QHTM v1.0 · Licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div>
+    </div>
+    <p class="disc">QHTM catalogs adversary techniques for defensive research. It contains no detection or exploitation methods and endorses no product. Maturity tags record whether a technique has been demonstrated on hardware, in simulation, remains theoretical, or is suppressed on current production hardware; they are a safeguard against over-claiming, not a severity ranking. Related weakness and attack-pattern classes have been contributed to MITRE's CWE and CAPEC programs.</p>
+  </footer>
+
+</div>
+
+<script>
+const TACTICS = [
+  { id:"T1", name:"Physical-Layer Interference", techs:[
+    ["T1.1","Idle crosstalk",["Supp"],"Spectator-qubit disturbance from neighbouring idle qubits."],
+    ["T1.2","Active gate crosstalk",["HW","Supp"],"Aggressor gates corrupt a victim qubit, including double-sided variants."],
+    ["T1.3","Induced-flip disturbance",["HW","Supp"],"Aggressor activity flips a victim state (“Quantum Rowhammer”-class)."],
+    ["T1.4","Readout / measurement crosstalk",["Supp"],"Measurement of one qubit biases a neighbour's readout."],
+    ["T1.5","Reset / state-residue leakage",["Supp"],"Incomplete reset leaks prior-tenant or prior-job state on qubit reuse."],
+  ]},
+  { id:"T2", name:"QEC & Decoder Compromise", techs:[
+    ["T2.1","Targeted syndrome injection",["Sim"],"Alter specific syndrome bits to steer a chosen logical outcome."],
+    ["T2.2","Random syndrome injection",["Sim"],"Inject random syndrome errors to raise the logical error rate."],
+    ["T2.3","Syndrome replay",["Sim"],"Feed stale or repeated syndromes to mask a live error."],
+    ["T2.4","Syndrome suppression",["Sim"],"Drop or zero syndromes so real errors go uncorrected."],
+    ["T2.5","Decoder-path tampering",["Sim"],"Compromise the classical decoder path that computes corrections."],
+    ["T2.6","Adversarial trajectory selection",["Sim"],"Choose physically valid but low-confidence error explanations to force mis-correction."],
+  ]},
+  { id:"T3", name:"Control-Stack & Compilation Tampering", techs:[
+    ["T3.1","Rotation-angle perturbation",["HW"],"Silently shift gate angles below notice to bias results."],
+    ["T3.2","Gate deletion",["HW"],"Silently drop gates from the compiled circuit."],
+    ["T3.3","Hidden-gate insertion",["HW"],"Insert gates not present in the submitted circuit."],
+    ["T3.4","Qubit remapping",["HW"],"Reassign logical-to-physical qubits to a worse or attacker-chosen layout."],
+    ["T3.5","Gate substitution",["HW"],"Replace gates with near-equivalents that change the result."],
+    ["T3.6","Calibration-pipeline tampering",["Theo"],"Corrupt calibration data so that honest circuits misbehave."],
+    ["T3.7","Persistent control-stack implant (APT)",["Sim"],"Implant tampers just below per-circuit tolerances, biasing results across jobs."],
+    ["T3.8","Result / measurement-path tampering",["Theo"],"Alter returned counts or measurements after execution."],
+  ]},
+  { id:"T4", name:"Cross-Tenant / Co-Tenancy", techs:[
+    ["T4.1","Cross-tenant crosstalk corruption",["Sim"],"A co-resident tenant corrupts a victim tenant's computation."],
+    ["T4.2","Tenant state-residue / isolation break",["Sim"],"Victim state leaks to a co-resident or subsequent tenant."],
+  ]},
+  { id:"T5", name:"Covert Channels & Information Leakage", techs:[
+    ["T5.1","Feed-forward covert channel (within-job)",["HW"],"Mid-circuit measurement plus feed-forward carries information between registers within a job."],
+    ["T5.2","Cross-tenant covert channel",["Sim"],"The same primitive operated across tenants on shared hardware."],
+    ["T5.3","Control-flow / dynamic-circuit side channel",["Supp"],"Conditional execution leaks data via observable control flow."],
+    ["T5.4","Decoder-timing / passive side channel",["Theo"],"Decoder latency or behaviour leaks circuit or secret information."],
+    ["T5.5","Power side channel",["HW"],"Device power traces classify or recover the running circuit."],
+  ]},
+];
+const BC = {HW:"b-hw",Sim:"b-sim",Theo:"b-theo",Supp:"b-supp"};
+const mx = document.getElementById("matrix");
+TACTICS.forEach(t=>{
+  const col = document.createElement("div"); col.className="col";
+  const badges = (arr)=>arr.map(m=>`<span class="badge ${BC[m]}">${m}</span>`).join("");
+  col.innerHTML = `
+    <div class="col-h">
+      <div class="tid">${t.id}</div>
+      <div class="tname">${t.name}</div>
+      <div class="tcount">${t.techs.length} technique${t.techs.length>1?"s":""}</div>
+    </div>
+    <div class="col-b">
+      ${t.techs.map(([code,name,mat,def])=>`
+        <div class="tech" data-mat="${mat.join(" ")}">
+          <div class="thead">
+            <span class="tcode">${code}</span>
+            <span class="badges">${badges(mat)}</span>
+          </div>
+          <p class="tn">${name}</p>
+          <p class="td">${def}</p>
+        </div>`).join("")}
+    </div>`;
+  mx.appendChild(col);
+});
+const fbtns = [...document.querySelectorAll(".fbtn")];
+fbtns.forEach(b=>b.addEventListener("click",()=>{
+  const f = b.dataset.f;
+  fbtns.forEach(x=>x.setAttribute("aria-pressed", x===b ? "true":"false"));
+  document.querySelectorAll(".tech").forEach(el=>{
+    const mats = el.dataset.mat.split(" ");
+    el.classList.toggle("dim", f!=="all" && !mats.includes(f));
+  });
+}));
+</script>
+</body>
+</html>
