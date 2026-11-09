@@ -120,7 +120,8 @@ Each technique carries an honest maturity tag — **including whether current pr
 - **Open licence (CC BY 4.0).** Free to use, map to, and build on, with attribution. The vocabulary is the public good.
 - **Stable IDs.** A technique ID (e.g., `T3.7`) never changes meaning. New techniques append; maturity tags update as the field demonstrates them.
 - **Versioning.** Semantic versions (v1.0 → …).
-- **Contributions welcome.** Propose new techniques or maturity evidence via pull request / issue. Submissions are reviewed by the maintainer.
+- **Contributions welcome.** Propose new techniques or maturity evidence via pull request / issue. Submissions are reviewed by the maintainer per the [Governance](GOVERNANCE.md) process; participation follows the [Code of Conduct](CODE_OF_CONDUCT.md).
+- **Governance.** QHTM is maintained under an open, documented [governance model](GOVERNANCE.md) — stable technique IDs, conservative maturity tags, a defined contribution and review process, and an explicit path to neutral institutional stewardship.
 - **Neutral stewardship intended.** QHTM is offered for adoption and co-stewardship by a neutral institutional home; its technique classes are being contributed to MITRE CWE/CAPEC where applicable.
 - **Changelog — v1.1.** Added T2.7 (decoder backpressure / throughput exhaustion), T3.9 (classical control-plane / scheduler injection), T4.3 (temporal-tenant state-remanence / calibration degradation); sharpened the T3 and T4 framing (temporal vs spatial multi-tenancy; control-plane as a near-term target). Technique count 26 → 29. Incorporates community review from the r/QuantumComputing and Unitary Foundation communities.
 
