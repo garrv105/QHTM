@@ -7,6 +7,8 @@
 **Version 1.1** · 2026 · Originated by Garrv Sipani · Open community resource
 **License: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)** (free to use and adapt with attribution)
 
+**Featured in:** [*Quantum Computing Report* — "Why Quantum Hardware Needs Its Own Threat Model"](https://quantumcomputingreport.com/why-quantum-hardware-needs-its-own-threat-model/)
+
 ---
 
 ## What this is
