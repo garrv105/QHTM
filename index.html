@@ -115,12 +115,12 @@
 <div class="wrap">
 
   <header>
-    <span class="eyebrow">Open Framework · v1.0</span>
+    <span class="eyebrow">Open Framework · v1.1</span>
     <h1>The <span class="g">Quantum Hardware<br>Threat Matrix</span></h1>
     <p class="lede"><strong>QHTM</strong> is an open, defense-agnostic catalog of adversary techniques against quantum computing hardware and its classical control stack — modeled on MITRE ATT&CK. It covers the surface that fault tolerance will depend on: the QEC syndrome/decoder pipeline and the classical control stack. It is <strong>not</strong> post-quantum cryptography, which protects classical systems <em>from</em> quantum computers. QHTM maps attacks <em>on the quantum computer itself.</em></p>
     <div class="meta">
       <span class="chip cta"><a href="https://github.com/garrv105/qhtm" style="color:inherit">★ github.com/garrv105/qhtm</a></span>
-      <span class="chip"><b>26</b> techniques</span>
+      <span class="chip"><b>29</b> techniques</span>
       <span class="chip"><b>5</b> tactics</span>
       <span class="chip">License <b>CC BY 4.0</b></span>
       <span class="chip">Author <b>Garrv Sipani</b></span>
@@ -187,7 +187,7 @@
   <footer>
     <div class="fr">
       <div>Originated and maintained by <b style="color:var(--txt)">Garrv Sipani</b> · <a href="https://github.com/garrv105/qhtm">github.com/garrv105/qhtm</a></div>
-      <div>QHTM v1.0 · Licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div>
+      <div>QHTM v1.1 · Licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div>
     </div>
     <p class="disc">QHTM catalogs adversary techniques for defensive research. It contains no detection or exploitation methods and endorses no product. Maturity tags record whether a technique has been demonstrated on hardware, in simulation, remains theoretical, or is suppressed on current production hardware; they are a safeguard against over-claiming, not a severity ranking. Related weakness and attack-pattern classes have been contributed to MITRE's CWE and CAPEC programs.</p>
   </footer>
@@ -210,6 +210,7 @@ const TACTICS = [
     ["T2.4","Syndrome suppression",["Sim"],"Drop or zero syndromes so real errors go uncorrected."],
     ["T2.5","Decoder-path tampering",["Sim"],"Compromise the classical decoder path that computes corrections."],
     ["T2.6","Adversarial trajectory selection",["Sim"],"Choose physically valid but low-confidence error explanations to force mis-correction."],
+    ["T2.7","Decoder backpressure / throughput exhaustion",["Theo"],"A crafted high-syndrome-weight circuit drives the real-time decoder into backlog, pushing decode latency past the fault-tolerance window — resource exhaustion, not correctness corruption."],
   ]},
   { id:"T3", name:"Control-Stack & Compilation Tampering", techs:[
     ["T3.1","Rotation-angle perturbation",["HW"],"Silently shift gate angles below notice to bias results."],
@@ -220,10 +221,12 @@ const TACTICS = [
     ["T3.6","Calibration-pipeline tampering",["Theo"],"Corrupt calibration data so that honest circuits misbehave."],
     ["T3.7","Persistent control-stack implant (APT)",["Sim"],"Implant tampers just below per-circuit tolerances, biasing results across jobs."],
     ["T3.8","Result / measurement-path tampering",["Theo"],"Alter returned counts or measurements after execution."],
+    ["T3.9","Classical control-plane / scheduler injection",["Theo"],"Tampering at the orchestration layer — job scheduler/controller plugins, calibration databases, pulse-synthesis / AWG memory — rather than the circuit representation."],
   ]},
   { id:"T4", name:"Cross-Tenant / Co-Tenancy", techs:[
     ["T4.1","Cross-tenant crosstalk corruption",["Sim"],"A co-resident tenant corrupts a victim tenant's computation."],
     ["T4.2","Tenant state-residue / isolation break",["Sim"],"Victim state leaks to a co-resident or subsequent tenant."],
+    ["T4.3","Temporal-tenant state-remanence / calibration degradation",["Theo"],"On time-sliced tenancy, an aggressor leaves residual excitations, cryo-stage heating, or detuning drift that degrades the next tenant's gate fidelity — no simultaneous co-residency needed."],
   ]},
   { id:"T5", name:"Covert Channels & Information Leakage", techs:[
     ["T5.1","Feed-forward covert channel (within-job)",["HW"],"Mid-circuit measurement plus feed-forward carries information between registers within a job."],
