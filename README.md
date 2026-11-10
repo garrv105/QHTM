@@ -24,6 +24,7 @@ QHTM is intended as a community resource and is offered for **neutral stewardshi
 - **Not** post-quantum cryptography (PQC) or quantum-safe cryptography. PQC protects *classical* systems against *future* quantum computers — the opposite problem, already served by other communities (NIST, CSA, ETSI).
 - **Not** a defense, product, or detection specification. QHTM catalogs techniques; whether and how any tool detects a technique is tracked separately and is out of scope here.
 - **Not** quantum key distribution or quantum networking.
+- **Not** the quantum *communication / network* attack surface — complementary efforts (e.g., SQOUT) cover that. QHTM is scoped to the quantum computer and its classical control stack.
 
 ## Scope
 
@@ -83,7 +84,7 @@ Each technique carries an honest maturity tag — **including whether current pr
 | T2.7 | Decoder backpressure / throughput exhaustion | Crafted high-syndrome-weight circuit drives the real-time decoder (FPGA/ASIC MWPM or Union-Find, on microsecond budgets) into backlog, pushing decode latency past the fault-tolerance window — resource exhaustion, not corruption | ○ |
 
 ### T3 — Control-Stack & Compilation Tampering
-*The live, near-term surface: the classical compiler/transpiler, calibration pipeline, scheduler, result path, and any persistent implant in the control software. The classical control-plane itself — schedulers, calibration DBs, the pulse/AWG layer (T3.9) — is a primary soft target, not only the compiler. Vendor-agnostic, deployable-today risk.*
+*The live, near-term surface: the classical compiler/transpiler, calibration pipeline, scheduler, result path, and any persistent implant in the control software. The classical control-plane itself — schedulers, calibration DBs, the pulse/AWG layer (T3.9) — is a primary soft target, not only the compiler. Vendor-agnostic, deployable-today risk. These techniques assume an adversary already holds a foothold in the classical pipeline; real initial-access vectors into it include vulnerabilities in the quantum SDK's circuit-serialization and control code (e.g., CVE-2026-116499 — remote code execution via a crafted Qiskit QPY file).*
 
 | ID | Technique | What it does | Maturity |
 |----|-----------|--------------|----------|
