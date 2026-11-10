@@ -9,6 +9,8 @@
 
 **Featured in:** [*Quantum Computing Report* — "Why Quantum Hardware Needs Its Own Threat Model"](https://quantumcomputingreport.com/why-quantum-hardware-needs-its-own-threat-model/)
 
+*Competing interests: the maintainer also develops detection methods for the techniques cataloged here. QHTM is a defense-agnostic, vendor-neutral catalog maintained under open [governance](GOVERNANCE.md) (§8); it names no product and endorses none.*
+
 ---
 
 ## What this is
