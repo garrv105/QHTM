@@ -60,7 +60,7 @@ Each technique carries an honest maturity tag — **including whether current pr
 | T5 | Covert Channels & Information Leakage | 5 |
 
 ### T1 — Physical-Layer Interference
-*Adversary perturbs qubits or readout through device physics. On current tunable-coupler hardware most return a statistical null; retained for completeness and for other/future hardware.*
+*Adversary perturbs qubits or readout through device physics. On current tunable-coupler hardware most return a statistical null; retained for completeness and for other/future hardware. Recent 2026 reports (arXiv:2611.07983; arXiv:2504.07875) show large but strongly device-dependent induced-outcome shifts on some current devices — QHTM holds the conservative tags pending methodology that isolates a true state flip from readout crosstalk, leakage and heating.*
 
 | ID | Technique | What it does | Maturity |
 |----|-----------|--------------|----------|
@@ -84,7 +84,7 @@ Each technique carries an honest maturity tag — **including whether current pr
 | T2.7 | Decoder backpressure / throughput exhaustion | Crafted high-syndrome-weight circuit drives the real-time decoder (FPGA/ASIC MWPM or Union-Find, on microsecond budgets) into backlog, pushing decode latency past the fault-tolerance window — resource exhaustion, not corruption | ○ |
 
 ### T3 — Control-Stack & Compilation Tampering
-*The live, near-term surface: the classical compiler/transpiler, calibration pipeline, scheduler, result path, and any persistent implant in the control software. The classical control-plane itself — schedulers, calibration DBs, the pulse/AWG layer (T3.9) — is a primary soft target, not only the compiler. Vendor-agnostic, deployable-today risk. These techniques assume an adversary already holds a foothold in the classical pipeline; real initial-access vectors into it include vulnerabilities in the quantum SDK's circuit-serialization and control code (e.g., CVE-2026-116499 — remote code execution via a crafted Qiskit QPY file).*
+*The live, near-term surface: the classical compiler/transpiler, calibration pipeline, scheduler, result path, and any persistent implant in the control software. The classical control-plane itself — schedulers, calibration DBs, the pulse/AWG layer (T3.9) — is a primary soft target, not only the compiler. Vendor-agnostic, deployable-today risk. These techniques assume an adversary already holds a foothold in the classical pipeline; real initial-access vectors into it include vulnerabilities in the quantum SDK's circuit-serialization and control code (e.g., CVE-2026-116499 — remote code execution via a crafted Qiskit QPY file; and CVE-2026-124035 — code execution via a tampered Amazon Braket task-result document — two vendors within one week).*
 
 | ID | Technique | What it does | Maturity |
 |----|-----------|--------------|----------|
@@ -95,7 +95,7 @@ Each technique carries an honest maturity tag — **including whether current pr
 | T3.5 | Gate substitution | Replace gates with near-equivalents that change the result | ◆ |
 | T3.6 | Calibration-pipeline tampering | Corrupt calibration data so honest circuits misbehave | ○ |
 | T3.7 | Persistent control-stack implant (APT) | Within-tolerance implant tampering just under per-circuit integrity checks | ▲ |
-| T3.8 | Result / measurement-path tampering | Alter returned counts/measurements after execution | ○ |
+| T3.8 | Result / measurement-path tampering | Alter returned counts/measurements after execution (the result path is also a code-execution delivery vector — cf. CVE-2026-124035) | ○ |
 | T3.9 | Classical control-plane / scheduler injection | Tampering at the orchestration layer — scheduler/controller plugins (Slurm/SPANK-style), calibration databases, pulse-synthesis/AWG memory — rather than the circuit representation | ○ |
 
 ### T4 — Cross-Tenant / Co-Tenancy
@@ -128,10 +128,10 @@ Each technique carries an honest maturity tag — **including whether current pr
 - **Contributions welcome.** Propose new techniques or maturity evidence via pull request / issue. Submissions are reviewed by the maintainer per the [Governance](GOVERNANCE.md) process; participation follows the [Code of Conduct](CODE_OF_CONDUCT.md).
 - **Governance.** QHTM is maintained under an open, documented [governance model](GOVERNANCE.md) — stable technique IDs, conservative maturity tags, a defined contribution and review process, and an explicit path to neutral institutional stewardship.
 - **Neutral stewardship intended.** QHTM is offered for adoption and co-stewardship by a neutral institutional home; its technique classes are being contributed to MITRE CWE/CAPEC where applicable.
-- **Changelog — v1.1.** Added T2.7 (decoder backpressure / throughput exhaustion), T3.9 (classical control-plane / scheduler injection), T4.3 (temporal-tenant state-remanence / calibration degradation); sharpened the T3 and T4 framing (temporal vs spatial multi-tenancy; control-plane as a near-term target). Technique count 26 → 29. Incorporates community review from the r/QuantumComputing and Unitary Foundation communities.
+- **Changelog — v1.1.** Added T2.7 (decoder backpressure / throughput exhaustion), T3.9 (classical control-plane / scheduler injection), T4.3 (temporal-tenant state-remanence / calibration degradation); sharpened the T3 and T4 framing (temporal vs spatial multi-tenancy; control-plane as a near-term target). Technique count 26 → 29. Added references for T1.3 (Row Hammer / QubitHammer, maturity held), a second-vendor initial-access CVE (Amazon Braket, CVE-2026-124035), and related-work positioning (QaaS STRIDE model). Incorporates community review from the r/QuantumComputing and Unitary Foundation communities.
 
 ## Acknowledgements & prior work
 
-QHTM builds on a growing body of published research on attacks against quantum hardware and on an earlier preliminary mapping of quantum attacks to generic weakness categories (Blakely et al., *A Preliminary Taxonomy of Attacks on Quantum Computers*, arXiv:2404.12465, 2024). QHTM extends that direction with a named, versioned, hardware-grounded technique namespace. References for individual techniques are maintained in the per-technique pages.
+QHTM builds on a growing body of published research on attacks against quantum hardware and on an earlier preliminary mapping of quantum attacks to generic weakness categories (Blakely et al., *A Preliminary Taxonomy of Attacks on Quantum Computers*, arXiv:2404.12465, 2024). QHTM extends that direction with a named, versioned, hardware-grounded technique namespace. Complementary pipeline-level models of the quantum-cloud attack surface — e.g. Rahman, Haghparast & Mikkonen, *An End-to-End Threat Model for the Quantum-as-a-Service Pipeline* (arXiv:2608.05836, 2026), a six-stage STRIDE analysis — map into this namespace; QHTM supplies the named-technique granularity such narrative models leave open. References for individual techniques are maintained in the per-technique pages.
 
 *MITRE ATT&CK® is a registered trademark of The MITRE Corporation; QHTM is independent and not affiliated with or endorsed by MITRE.*
