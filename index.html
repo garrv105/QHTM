@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>QHTM — Quantum Hardware Threat Matrix</title>
-<meta name="description" content="QHTM, the Quantum Hardware Threat Matrix: an open, defense-agnostic, ATT&CK-style catalog of adversary techniques against quantum computing hardware. 26 techniques across 5 tactics, each with an honest maturity tag. CC BY 4.0.">
+<meta name="description" content="QHTM, the Quantum Hardware Threat Matrix: an open, defense-agnostic, ATT&CK-style catalog of adversary techniques against quantum computing hardware. 30 techniques across 5 tactics, each with an honest maturity tag. CC BY 4.0.">
 <meta property="og:title" content="QHTM — Quantum Hardware Threat Matrix">
-<meta property="og:description" content="An open, ATT&CK-style threat matrix for the security of quantum computing hardware. 26 techniques, 5 tactics, honest maturity tags. CC BY 4.0.">
+<meta property="og:description" content="An open, ATT&CK-style threat matrix for the security of quantum computing hardware. 30 techniques, 5 tactics, honest maturity tags. CC BY 4.0.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -115,12 +115,12 @@
 <div class="wrap">
 
   <header>
-    <span class="eyebrow">Open Framework · v1.1</span>
+    <span class="eyebrow">Open Framework · v1.2</span>
     <h1>The <span class="g">Quantum Hardware<br>Threat Matrix</span></h1>
     <p class="lede"><strong>QHTM</strong> is an open, defense-agnostic catalog of adversary techniques against quantum computing hardware and its classical control stack — modeled on MITRE ATT&CK. It covers the surface that fault tolerance will depend on: the QEC syndrome/decoder pipeline and the classical control stack. It is <strong>not</strong> post-quantum cryptography, which protects classical systems <em>from</em> quantum computers. QHTM maps attacks <em>on the quantum computer itself.</em></p>
     <div class="meta">
       <span class="chip cta"><a href="https://github.com/garrv105/qhtm" style="color:inherit">★ github.com/garrv105/qhtm</a></span>
-      <span class="chip"><b>29</b> techniques</span>
+      <span class="chip"><b>30</b> techniques</span>
       <span class="chip"><b>5</b> tactics</span>
       <span class="chip">License <b>CC BY 4.0</b></span>
       <span class="chip">Author <b>Garrv Sipani</b></span>
@@ -181,6 +181,7 @@
       <li><b>Crosstalk-induced Side Channel Threats in Multi-Tenant NISQ Computers.</b> N. Choudhury, C. N. Mude, S. Das, P. C. Tikkireddi, S. Tannu, K. Basu. NDSS, 2025. arXiv:2412.10507.</li>
       <li><b>Crosstalk-Induced Row Hammer Attacks on Quantum Random Access Codes.</b> Almaguer-Angeles et al. arXiv:2611.07983, 2026. <i>(T1.3 evidence; maturity held pending confound isolation.)</i></li>
       <li><b>An End-to-End Threat Model for the Quantum-as-a-Service Pipeline.</b> B. Rahman, M. Haghparast, T. Mikkonen. arXiv:2608.05836, 2026. <i>(Complementary pipeline-level STRIDE model.)</i></li>
+      <li><b>How wide must an eavesdropper be? Leakage of a toric-code logical bit to a strip and the Nishimori point.</b> K. Karagiannis. arXiv:2611.13174, 2026. <i>(T5.6 evidence; preprint; observer emulated on real-device readout.)</i></li>
       <li><b>Fooling the Decoder: An Adversarial Attack on Quantum Error Correction.</b> J. Lenssen, A. Paler. arXiv:2504.19651, 2025.</li>
       <li><b>Fault Injection Attacks on Machine Learning-based Quantum Computer Readout Error Correction.</b> A. Etim, J. Szefer. arXiv:2512.20077, 2025.</li>
       <li><b>MITRE ATT&CK: Design and Philosophy.</b> B. Strom et al. The MITRE Corporation, 2020.</li>
@@ -190,7 +191,7 @@
   <footer>
     <div class="fr">
       <div>Originated and maintained by <b style="color:var(--txt)">Garrv Sipani</b> · <a href="https://github.com/garrv105/qhtm">github.com/garrv105/qhtm</a></div>
-      <div>QHTM v1.1 · Licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div>
+      <div>QHTM v1.2 · Licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div>
     </div>
     <p class="disc">QHTM catalogs adversary techniques for defensive research. It contains no detection or exploitation methods and endorses no product. Maturity tags record whether a technique has been demonstrated on hardware, in simulation, remains theoretical, or is suppressed on current production hardware; they are a safeguard against over-claiming, not a severity ranking. Related weakness and attack-pattern classes have been contributed to MITRE's CWE and CAPEC programs. Competing interests: the maintainer also develops detection methods for these techniques; QHTM is kept vendor-neutral and product-agnostic under open governance.</p>
   </footer>
@@ -232,11 +233,12 @@ const TACTICS = [
     ["T4.3","Temporal-tenant state-remanence / calibration degradation",["Theo"],"On time-sliced tenancy, an aggressor leaves residual excitations, cryo-stage heating, or detuning drift that degrades the next tenant's gate fidelity — no simultaneous co-residency needed."],
   ]},
   { id:"T5", name:"Covert Channels & Information Leakage", techs:[
-    ["T5.1","Feed-forward covert channel (within-job)",["HW"],"Mid-circuit measurement plus feed-forward carries information between registers within a job."],
+    ["T5.1","Feed-forward covert channel (within-job)",["HW"],"Mid-circuit measurement plus feed-forward carries information between registers within a job. Measured on three production processors at 0.69–0.90 bit per use, controls near zero (arXiv:2611.05722, the maintainer's own measurement; see competing interests below)."],
     ["T5.2","Cross-tenant covert channel",["Sim"],"The same primitive operated across tenants on shared hardware."],
     ["T5.3","Control-flow / dynamic-circuit side channel",["Supp"],"Conditional execution leaks data via observable control flow."],
     ["T5.4","Decoder-timing / passive side channel",["Theo"],"Decoder latency or behaviour leaks circuit or secret information."],
     ["T5.5","Power side channel",["HW"],"Device power traces classify or recover the running circuit."],
+    ["T5.6","Partial-code logical-state eavesdropping",["Sim"],"An observer holding the data-qubit readout of only a region of an error-correcting code — one module of a partitioned decoder, or one shared readout line — infers the protected logical value when that region contains a representative of the logical operator. Syndrome data alone does not leak it."],
   ]},
 ];
 const BC = {HW:"b-hw",Sim:"b-sim",Theo:"b-theo",Supp:"b-supp"};
