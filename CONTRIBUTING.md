@@ -20,7 +20,7 @@ algorithmic attacks, and any product-specific detection or defense method.
 
 1. Open an issue proposing the change (new technique, maturity update, reference,
    or correction), with supporting references.
-2. For a new technique, propose: a tactic (T1–T5), a short name, a one-line
+2. For a new technique, propose: a tactic (T1–T6), a short name, a one-line
    description, a maturity tag, and at least one public reference.
 3. Submit a pull request. The maintainer reviews for scope, accuracy, and
    evidence.

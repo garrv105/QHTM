@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>QHTM — Quantum Hardware Threat Matrix</title>
-<meta name="description" content="QHTM, the Quantum Hardware Threat Matrix: an open, defense-agnostic, ATT&CK-style catalog of adversary techniques against quantum computing hardware. 30 techniques across 5 tactics, each with an honest maturity tag. CC BY 4.0.">
+<meta name="description" content="QHTM, the Quantum Hardware Threat Matrix: an open, defense-agnostic, ATT&CK-style catalog of adversary techniques against quantum computing hardware. 33 techniques across 6 tactics, each with an honest maturity tag. CC BY 4.0.">
 <meta property="og:title" content="QHTM — Quantum Hardware Threat Matrix">
-<meta property="og:description" content="An open, ATT&CK-style threat matrix for the security of quantum computing hardware. 30 techniques, 5 tactics, honest maturity tags. CC BY 4.0.">
+<meta property="og:description" content="An open, ATT&CK-style threat matrix for the security of quantum computing hardware. 33 techniques, 6 tactics, honest maturity tags. CC BY 4.0.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,7 +30,7 @@
     color:var(--txt); font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
     line-height:1.5; -webkit-font-smoothing:antialiased;
   }
-  .wrap{max-width:1240px; margin:0 auto; padding:0 16px}
+  .wrap{max-width:1440px; margin:0 auto; padding:0 16px}
   a{color:var(--accent2); text-decoration:none}
   a:hover{text-decoration:underline}
   code,.mono{font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace}
@@ -64,7 +64,7 @@
   .filters .fbtn[aria-pressed="true"]{background:var(--accent); color:#0a0d13; border-color:var(--accent)}
 
   /* Matrix */
-  .matrix{display:grid; grid-template-columns:repeat(5,1fr); gap:14px; align-items:start}
+  .matrix{display:grid; grid-template-columns:repeat(6,1fr); gap:12px; align-items:start}
   .col{background:var(--bg2); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; display:flex; flex-direction:column}
   .col-h{padding:14px 14px 12px; border-bottom:1px solid var(--line); background:var(--panel)}
   .col-h .tid{font-size:12px; font-weight:700; letter-spacing:.08em; color:var(--accent); font-family:"JetBrains Mono",monospace}
@@ -102,7 +102,8 @@
   footer .fr{display:flex; flex-wrap:wrap; gap:18px; justify-content:space-between; align-items:center}
   .disc{margin-top:16px; font-size:12.5px; color:var(--faint); max-width:80ch}
 
-  @media (max-width:1000px){ .matrix{grid-template-columns:repeat(2,1fr)} }
+  @media (max-width:1280px){ .matrix{grid-template-columns:repeat(3,1fr)} }
+  @media (max-width:900px){ .matrix{grid-template-columns:repeat(2,1fr)} }
   @media (max-width:640px){
     .matrix{grid-template-columns:1fr}
     .grid2{grid-template-columns:1fr}
@@ -115,13 +116,13 @@
 <div class="wrap">
 
   <header>
-    <span class="eyebrow">Open Framework · v1.2</span>
+    <span class="eyebrow">Open Framework · v1.3</span>
     <h1>The <span class="g">Quantum Hardware<br>Threat Matrix</span></h1>
     <p class="lede"><strong>QHTM</strong> is an open, defense-agnostic catalog of adversary techniques against quantum computing hardware and its classical control stack — modeled on MITRE ATT&CK. It covers the surface that fault tolerance will depend on: the QEC syndrome/decoder pipeline and the classical control stack. It is <strong>not</strong> post-quantum cryptography, which protects classical systems <em>from</em> quantum computers. QHTM maps attacks <em>on the quantum computer itself.</em></p>
     <div class="meta">
       <span class="chip cta"><a href="https://github.com/garrv105/qhtm" style="color:inherit">★ github.com/garrv105/qhtm</a></span>
-      <span class="chip"><b>30</b> techniques</span>
-      <span class="chip"><b>5</b> tactics</span>
+      <span class="chip"><b>33</b> techniques</span>
+      <span class="chip"><b>6</b> tactics</span>
       <span class="chip">License <b>CC BY 4.0</b></span>
       <span class="chip">Author <b>Garrv Sipani</b></span>
       <span class="chip"><a href="https://doi.org/10.5281/zenodo.24047636" style="color:inherit">DOI <b>10.5281/zenodo.24047636</b></a></span>
@@ -182,6 +183,10 @@
       <li><b>Crosstalk-Induced Row Hammer Attacks on Quantum Random Access Codes.</b> Almaguer-Angeles et al. arXiv:2611.07983, 2026. <i>(T1.3 evidence; maturity held pending confound isolation.)</i></li>
       <li><b>An End-to-End Threat Model for the Quantum-as-a-Service Pipeline.</b> B. Rahman, M. Haghparast, T. Mikkonen. arXiv:2608.05836, 2026. <i>(Complementary pipeline-level STRIDE model.)</i></li>
       <li><b>How wide must an eavesdropper be? Leakage of a toric-code logical bit to a strip and the Nishimori point.</b> K. Karagiannis. arXiv:2611.13174, 2026. <i>(T5.6 evidence; preprint; observer emulated on real-device readout.)</i></li>
+      <li><b>Short Paper: Device- and Locality-Specific Fingerprinting of Shared NISQ Quantum Computers.</b> A. Mi, S. Deng, J. Szefer. HASP, 2021. arXiv:2202.12731. <i>(T6.1 evidence.)</i></li>
+      <li><b>Quantum Computer Fingerprinting using Error Syndromes.</b> V. Mutolo et al. arXiv:2506.16614, 2025. <i>(Supporting for T6.1: a defensive backend-verification study on five machines that corroborates the fingerprint signal; not an attack paper.)</i></li>
+      <li><b>Toward Covert Quantum Computing.</b> E. J. D. Anderson, K. Datta, B. A. Bash. arXiv:2605.14325, 2026. <i>(T6.2 evidence; co-tenancy emulated.)</i></li>
+      <li><b>Anticipating Decoder Side-channel Attacks in Fault-tolerant Quantum Computers.</b> S. Shukla, D. E. Browne, S. Nishio. arXiv:2607.12174, 2026. <i>(T5.7 evidence; preprint; simulation only.)</i></li>
       <li><b>Fooling the Decoder: An Adversarial Attack on Quantum Error Correction.</b> J. Lenssen, A. Paler. arXiv:2504.19651, 2025.</li>
       <li><b>Fault Injection Attacks on Machine Learning-based Quantum Computer Readout Error Correction.</b> A. Etim, J. Szefer. arXiv:2512.20077, 2025.</li>
       <li><b>MITRE ATT&CK: Design and Philosophy.</b> B. Strom et al. The MITRE Corporation, 2020.</li>
@@ -191,7 +196,7 @@
   <footer>
     <div class="fr">
       <div>Originated and maintained by <b style="color:var(--txt)">Garrv Sipani</b> · <a href="https://github.com/garrv105/qhtm">github.com/garrv105/qhtm</a></div>
-      <div>QHTM v1.2 · Licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div>
+      <div>QHTM v1.3 · Licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div>
     </div>
     <p class="disc">QHTM catalogs adversary techniques for defensive research. It contains no detection or exploitation methods and endorses no product. Maturity tags record whether a technique has been demonstrated on hardware, in simulation, remains theoretical, or is suppressed on current production hardware; they are a safeguard against over-claiming, not a severity ranking. Related weakness and attack-pattern classes have been contributed to MITRE's CWE and CAPEC programs. Competing interests: the maintainer also develops detection methods for these techniques; QHTM is kept vendor-neutral and product-agnostic under open governance.</p>
   </footer>
@@ -239,6 +244,11 @@ const TACTICS = [
     ["T5.4","Decoder-timing / passive side channel",["Theo"],"Decoder latency or behaviour leaks circuit or secret information."],
     ["T5.5","Power side channel",["HW"],"Device power traces classify or recover the running circuit."],
     ["T5.6","Partial-code logical-state eavesdropping",["Sim"],"An observer holding the data-qubit readout of only a region of an error-correcting code — one module of a partitioned decoder, or one shared readout line — infers the protected logical value when that region contains a representative of the logical operator. Syndrome data alone does not leak it."],
+    ["T5.7","Decoder-side gate / circuit inference",["Sim"],"An untrusted or passively compromised decoder infers which logical operations, and in aggregate which circuit, a victim is running, from gate-dependent patterns in the syndrome stream it decodes. Computation identity at the decoder, as distinct from the logical value in T5.6. Shown in simulation only."],
+  ]},
+  { id:"T6", name:"Reconnaissance & Discovery", techs:[
+    ["T6.1","Device fingerprinting / infrastructure mapping",["HW"],"Derive a stable identifier for a specific processor, or a region of it, from its error signature using ordinary user access, to map a provider's fleet and target later attacks."],
+    ["T6.2","Co-tenant activity sensing",["Sim"],"A co-resident adversary detects that a neighbour is computing from disturbance on qubits it controls. Effect measured on hardware; co-tenancy emulated within one submission."],
   ]},
 ];
 const BC = {HW:"b-hw",Sim:"b-sim",Theo:"b-theo",Supp:"b-supp"};

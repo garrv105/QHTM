@@ -5,8 +5,8 @@ abstract: >-
   An open, defense-agnostic taxonomy of adversary techniques against quantum
   computing hardware and its classical control stack (QEC/syndrome-decoder
   pipeline, control/compilation stack, cross-tenant interactions, covert
-  channels). Not post-quantum cryptography.
-version: "1.2"
+  channels, reconnaissance and discovery). Not post-quantum cryptography.
+version: "1.3"
 date-released: 2026-11-12
 license: CC-BY-4.0
 authors:

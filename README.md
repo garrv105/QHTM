@@ -4,7 +4,7 @@
 
 **An open taxonomy of adversary techniques against quantum computing hardware and its classical control stack.**
 
-**Version 1.2** · 2026 · Originated by Garrv Sipani · Open community resource
+**Version 1.3** · 2026 · Originated by Garrv Sipani · Open community resource
 **License: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)** (free to use and adapt with attribution)
 
 **Featured in:** [*Quantum Computing Report* — "Why Quantum Hardware Needs Its Own Threat Model"](https://quantumcomputingreport.com/why-quantum-hardware-needs-its-own-threat-model/)
@@ -28,11 +28,11 @@ QHTM is intended as a community resource and is offered for **neutral stewardshi
 
 ## Scope
 
-Attacks on the quantum computer itself: the physical qubit layer, the QEC syndrome/decoder pipeline, the classical control and compilation stack, cross-tenant/co-tenancy interactions, and covert channels. Superconducting gate-based systems are the primary reference; techniques generalize to any modality that produces stabilizer syndromes and/or quantum measurement outputs under a classical control stack.
+Attacks on the quantum computer itself: the physical qubit layer, the QEC syndrome/decoder pipeline, the classical control and compilation stack, cross-tenant/co-tenancy interactions, covert channels, and the reconnaissance and discovery that precede them. Superconducting gate-based systems are the primary reference; techniques generalize to any modality that produces stabilizer syndromes and/or quantum measurement outputs under a classical control stack.
 
 ## How to cite
 
-> Quantum Hardware Threat Matrix (QHTM) v1.2, G. Sipani, 2026. CC BY 4.0.
+> Quantum Hardware Threat Matrix (QHTM) v1.3, G. Sipani, 2026. CC BY 4.0.
 
 ---
 
@@ -49,7 +49,7 @@ Each technique carries an honest maturity tag — **including whether current pr
 
 ---
 
-## The matrix (5 tactics, 30 techniques)
+## The matrix (6 tactics, 33 techniques)
 
 | ID | Tactic (adversary goal / locus) | # |
 |----|----------------------------------|---|
@@ -57,7 +57,8 @@ Each technique carries an honest maturity tag — **including whether current pr
 | T2 | QEC & Decoder Compromise | 7 |
 | T3 | Control-Stack & Compilation Tampering | 9 |
 | T4 | Cross-Tenant / Co-Tenancy | 3 |
-| T5 | Covert Channels & Information Leakage | 6 |
+| T5 | Covert Channels & Information Leakage | 7 |
+| T6 | Reconnaissance & Discovery | 2 |
 
 ### T1 — Physical-Layer Interference
 *Adversary perturbs qubits or readout through device physics. On current tunable-coupler hardware most return a statistical null; retained for completeness and for other/future hardware. Recent 2026 reports (arXiv:2611.07983; arXiv:2504.07875) show large but strongly device-dependent induced-outcome shifts on some current devices — QHTM holds the conservative tags pending methodology that isolates a true state flip from readout crosstalk, leakage and heating.*
@@ -118,6 +119,15 @@ Each technique carries an honest maturity tag — **including whether current pr
 | T5.4 | Decoder-timing / passive side channel | Decoder latency or behaviour leaks circuit/secret information | ○ |
 | T5.5 | Power side channel | Device power traces classify or recover the running circuit | ◆ |
 | T5.6 | Partial-code logical-state eavesdropping | An observer holding the data-qubit readout of only a region of an error-correcting code — one module's window in a partitioned decoder, or one shared readout line — infers the protected logical value when that region contains a representative of the logical operator being read out. Syndrome data alone does not carry this leakage. Leakage quantified on real-device readout with an emulated observer (arXiv:2611.13174) | ▲ |
+| T5.7 | Decoder-side gate / circuit inference | An untrusted or passively compromised decoder infers which logical operations, and in aggregate which circuit, a victim is running, from gate-dependent patterns in the syndrome stream it is given to decode. T5.7 concerns the identity of the computation at the decoder; T5.6 concerns the logical value at partial readout. Shown in simulation only; the classifier's code distance is not stated (arXiv:2607.12174, preprint) | ▲ |
+
+### T6 — Reconnaissance & Discovery
+*Techniques that gather information about the platform, or about a target's presence on it, to enable a later technique. They are carried out from ordinary user access. Boundary with T5: T5 covers leakage of a tenant's workload or data; T6 covers information about the platform or a target's presence.*
+
+| ID | Technique | What it does | Maturity |
+|----|-----------|--------------|----------|
+| T6.1 | Device fingerprinting / infrastructure mapping | Derive a stable identifier for a specific processor, or a region of it, from its error signature using ordinary user access, to map a provider's fleet and target later attacks (arXiv:2202.12731; the same signal is also used defensively for backend verification, cf. arXiv:2506.16614) | ◆ |
+| T6.2 | Co-tenant activity sensing | A co-resident adversary detects that a neighbour is computing from disturbance on qubits it controls. The effect is measured on hardware; co-tenancy was emulated within one submission (arXiv:2605.14325) | ▲ |
 
 ---
 
@@ -129,6 +139,7 @@ Each technique carries an honest maturity tag — **including whether current pr
 - **Contributions welcome.** Propose new techniques or maturity evidence via pull request / issue. Submissions are reviewed by the maintainer per the [Governance](GOVERNANCE.md) process; participation follows the [Code of Conduct](CODE_OF_CONDUCT.md).
 - **Governance.** QHTM is maintained under an open, documented [governance model](GOVERNANCE.md) — stable technique IDs, conservative maturity tags, a defined contribution and review process, and an explicit path to neutral institutional stewardship.
 - **Neutral stewardship intended.** QHTM is offered for adoption and co-stewardship by a neutral institutional home; its technique classes are being contributed to MITRE CWE/CAPEC where applicable.
+- **Changelog — v1.3.** Added a sixth tactic, T6 Reconnaissance & Discovery, with T6.1 (device fingerprinting / infrastructure mapping, hardware-demonstrated) and T6.2 (co-tenant activity sensing, simulation-tagged). Added T5.7 (decoder-side gate / circuit inference, simulation-tagged). Tactic count 5 → 6; technique count 30 → 33. No existing ID or maturity tag changed; the maturity legend is unchanged.
 - **Changelog — v1.2.** Added T5.6 (partial-code logical-state eavesdropping, simulation-tagged), a confidentiality technique at logical readout on the partitioned QEC data path. Technique count 29 → 30; tactic count unchanged. Added the hardware-evidence citation for T5.1 (the maintainer's own measurement, disclosed as such). Corrected reference titles and authors across the reference lists.
 - **Changelog — v1.1.** Added T2.7 (decoder backpressure / throughput exhaustion), T3.9 (classical control-plane / scheduler injection), T4.3 (temporal-tenant state-remanence / calibration degradation); sharpened the T3 and T4 framing (temporal vs spatial multi-tenancy; control-plane as a near-term target). Technique count 26 → 29. Added references for T1.3 (Row Hammer / QubitHammer, maturity held), a second-vendor initial-access CVE (Amazon Braket, CVE-2026-124035), and related-work positioning (QaaS STRIDE model). Incorporates community review from the r/QuantumComputing and Unitary Foundation communities.
 
