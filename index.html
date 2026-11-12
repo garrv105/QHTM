@@ -238,7 +238,7 @@ const TACTICS = [
     ["T4.3","Temporal-tenant state-remanence / calibration degradation",["Theo"],"On time-sliced tenancy, an aggressor leaves residual excitations, cryo-stage heating, or detuning drift that degrades the next tenant's gate fidelity — no simultaneous co-residency needed."],
   ]},
   { id:"T5", name:"Covert Channels & Information Leakage", techs:[
-    ["T5.1","Feed-forward covert channel (within-job)",["HW"],"Mid-circuit measurement plus feed-forward carries information between registers within a job. Measured on three production processors at 0.69–0.90 bit per use, controls near zero (arXiv:2611.05722, the maintainer's own measurement; see competing interests below)."],
+    ["T5.1","Feed-forward covert channel (within-job)",["HW"],"Mid-circuit measurement plus feed-forward carries information from one register to another that shares no two-qubit gate with it, within a job. The primitive is hardware-demonstrated by third parties (arXiv:2403.09514). Its capacity has one reported measurement (preprint, arXiv:2611.05722): 0.69–0.90 bit on three production processors, controls near zero. Single-source, the maintainer's own (see competing interests below); not independently replicated."],
     ["T5.2","Cross-tenant covert channel",["Sim"],"The same primitive operated across tenants on shared hardware."],
     ["T5.3","Control-flow / dynamic-circuit side channel",["Supp"],"Conditional execution leaks data via observable control flow."],
     ["T5.4","Decoder-timing / passive side channel",["Theo"],"Decoder latency or behaviour leaks circuit or secret information."],

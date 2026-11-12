@@ -113,7 +113,7 @@ Each technique carries an honest maturity tag — **including whether current pr
 
 | ID | Technique | What it does | Maturity |
 |----|-----------|--------------|----------|
-| T5.1 | Feed-forward covert channel (within-job) | Mid-circuit measurement + classical feed-forward carries information between registers within one job. Measured on three production superconducting processors at 0.69–0.90 bit of mutual information per use, with matched controls near zero (arXiv:2611.05722 — a measurement by the maintainer; see the competing-interests note above) | ◆ |
+| T5.1 | Feed-forward covert channel (within-job) | Mid-circuit measurement plus classical feed-forward carries information from one register to another that shares no two-qubit gate with it, within one job. The primitive itself is standard and hardware-demonstrated by third parties (arXiv:2403.09514, not a security paper). Its capacity as a channel has one reported measurement (preprint, arXiv:2611.05722): 0.69–0.90 bit of mutual-information capacity on three production superconducting processors, with matched controls near zero. That measurement is single-source and is the maintainer's own (see the competing-interests note above); it has not been independently replicated | ◆ |
 | T5.2 | Cross-tenant covert channel | The same primitive across tenants on shared hardware | ▲ |
 | T5.3 | Control-flow / dynamic-circuit side channel | Conditional execution leaks data via observable control flow | ✓ |
 | T5.4 | Decoder-timing / passive side channel | Decoder latency or behaviour leaks circuit/secret information | ○ |
