@@ -1,6 +1,8 @@
 # QHTM Governance
 
-*Version 1.0 of this governance document · applies to the Quantum Hardware Threat Matrix (QHTM)*
+*Version 1.1 of this governance document · applies to the Quantum Hardware Threat Matrix (QHTM)*
+
+*Amendments: v1.1 (November 2026) defines the Reviewer role in §3 — what is reviewed, independent review of entries that rest on the Editor's own work, and public recording of dissent.*
 
 This document defines how QHTM is maintained, how it evolves, and how it may transition to neutral institutional stewardship. It exists so that QHTM can be adopted, cited, and relied upon as shared infrastructure — not as any single party's asset.
 
@@ -31,7 +33,14 @@ This scope boundary is a governance invariant: contributions that cross it are d
 
 - **Founding Editor / Maintainer — Garrv Sipani.** Stewards the matrix, curates contributions, assigns technique IDs and maturity tags, manages releases and versioning, and holds final editorial decision until a formal steering body exists. Responsible for upholding the scope boundary and maturity integrity.
 - **Contributors.** Anyone may propose techniques, evidence, corrections, or maturity updates via issues and pull requests.
-- **Reviewers (as the project grows).** Recognized domain experts invited to review proposals for correctness, novelty, and tag accuracy.
+- **Reviewers.** Recognized domain experts invited by the Founding Editor to review proposals for correctness, novelty, and tag accuracy.
+  - **What is reviewed.** Every proposed change to a maturity tag, and every proposed new technique, is sent to at least one Reviewer in the relevant area before it is published, where such a Reviewer exists. Where none exists, the change may proceed and is recorded as **not independently reviewed**.
+  - **Entries involving the Editor's own work.** Any entry whose evidence includes work by the Founding Editor is reviewed by a Reviewer with no involvement in that work before its tag is set or changed, where such a Reviewer exists. Until that review has taken place, the entry's status is **not independently reviewed**.
+  - **Decision and dissent.** The Founding Editor holds the final editorial decision (see above). If the Editor decides against a Reviewer's recommendation, the Reviewer's dissent and reasons, and the Editor's reasons, are recorded publicly in the issue or pull request and are not edited or removed afterwards.
+  - **Time.** A Reviewer has 14 days to respond. Without a response the change may proceed and is recorded as "review requested, none received".
+  - **Naming and consent.** A Reviewer is named in the repository only with written consent and may withdraw at any time. Naming a Reviewer does not imply that the Reviewer, or the Reviewer's employer, endorses QHTM or any entry in it.
+  - **Conflicts.** Reviewers disclose commercial interests under §8 and do not review entries based on their own work.
+  - **No other rights.** The role is unpaid and carries no ownership, authorship of the framework, or decision rights.
 - **Steering Committee (future).** Upon adoption by a neutral institutional home (see §10), an open multi-stakeholder committee assumes governance, with the Founding Editor retaining a founding role.
 
 ## 4. How techniques are proposed and accepted
@@ -43,7 +52,7 @@ This scope boundary is a governance invariant: contributions that cross it are d
 
 **Inclusion criteria.** A technique is included when it has (a) a described mechanism in the literature *or* a demonstrated effect, and (b) is distinguished from neighbouring techniques by its **locus or mechanism**, not by implementation detail. Variant inflation (many near-identical entries) is explicitly avoided.
 
-**Review.** The Editor, with reviewers where available, assesses novelty, evidence quality, correct tactic placement, and the honesty of the proposed maturity tag.
+**Review.** The Editor, with reviewers where available, assesses novelty, evidence quality, correct tactic placement, and the honesty of the proposed maturity tag. Maturity-tag changes and new techniques follow the Reviewer process in §3.
 
 **Decision.** Each proposal is **accepted, returned for revision, or declined with a stated rationale.** Decisions and their reasoning are recorded in the issue/PR thread for transparency.
 
