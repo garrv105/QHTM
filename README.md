@@ -80,7 +80,7 @@ Each technique carries an honest maturity tag — **including whether current pr
 | T2.2 | Random syndrome injection | Inject random syndrome errors to raise the logical error rate | ▲ |
 | T2.3 | Syndrome replay | Feed stale/repeated syndromes to mask a live error | ▲ |
 | T2.4 | Syndrome suppression | Drop/zero syndromes so real errors go uncorrected | ▲ |
-| T2.5 | Decoder-path tampering | Compromise the classical decoder path feeding corrections | ▲ |
+| T2.5 | Decoder-path tampering | Compromise the classical decoder path feeding corrections. One simulated instance poisons the calibration-derived prior values the decoder is given, leaving syndromes and decoder code untouched: altering the most influential 6.4% of priors raised the logical error rate 3.35×, against 1.38× for random changes of the same size (preprint, arXiv:2609.27805) | ▲ |
 | T2.6 | Adversarial trajectory selection | Choose physically-valid but low-confidence error explanations to force decoder mis-correction | ▲ |
 | T2.7 | Decoder backpressure / throughput exhaustion | Crafted high-syndrome-weight circuit drives the real-time decoder (FPGA/ASIC MWPM or Union-Find, on microsecond budgets) into backlog, pushing decode latency past the fault-tolerance window — resource exhaustion, not corruption | ○ |
 
@@ -94,7 +94,7 @@ Each technique carries an honest maturity tag — **including whether current pr
 | T3.3 | Hidden-gate insertion | Insert gates not in the submitted circuit | ◆ |
 | T3.4 | Qubit remapping | Reassign logical→physical qubits to a worse/attacker-chosen layout | ◆ |
 | T3.5 | Gate substitution | Replace gates with near-equivalents that change the result | ◆ |
-| T3.6 | Calibration-pipeline tampering | Corrupt calibration data so honest circuits misbehave | ○ |
+| T3.6 | Calibration-pipeline tampering | An adversary in the calibration path falsifies calibration data, or shifts calibrated control settings, so that honest circuits run badly. Shown in simulation only: misreported two-qubit gate error rates mislead multi-tenant qubit allocators, lowering device utilisation and making circuits deeper and less likely to succeed, with the hardware untouched (preprint, arXiv:2504.04285); falsified calibration metadata and an injected control offset each degrade error-mitigated results (preprint, arXiv:2609.38713). No source runs against a real calibration pipeline. See also T2.5 | ▲ |
 | T3.7 | Persistent control-stack implant (APT) | Within-tolerance implant tampering just under per-circuit integrity checks | ▲ |
 | T3.8 | Result / measurement-path tampering | Alter returned counts/measurements after execution (the result path is also a code-execution delivery vector — cf. CVE-2026-124035) | ○ |
 | T3.9 | Classical control-plane / scheduler injection | Tampering at the orchestration layer — scheduler/controller plugins (Slurm/SPANK-style), calibration databases, pulse-synthesis/AWG memory — rather than the circuit representation | ○ |
